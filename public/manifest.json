@@ -1,0 +1,18 @@
+{
+  "name": "Frases Bíblicas",
+  "short_name": "Frases Bíblicas",
+  "description": "Frases e versículos bíblicos inspiradores para o seu dia a dia",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1510",
+  "theme_color": "#d97706",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["books", "lifestyle", "education"]
+}
