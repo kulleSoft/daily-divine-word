@@ -2,15 +2,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { BookOpen, Shield, Bell } from 'lucide-react';
+import { TranslationKey } from '@/i18n/translations';
 
 interface TermsDialogProps {
   open: boolean;
   onAccept: () => void;
   showCloseButton?: boolean;
   onClose?: () => void;
+  t: (key: TranslationKey) => string;
 }
 
-export function TermsDialog({ open, onAccept, showCloseButton = false, onClose }: TermsDialogProps) {
+export function TermsDialog({ open, onAccept, showCloseButton = false, onClose, t }: TermsDialogProps) {
   return (
     <Dialog open={open} onOpenChange={showCloseButton ? onClose : undefined}>
       <DialogContent className="max-w-md mx-auto bg-card border-border">
@@ -19,10 +21,10 @@ export function TermsDialog({ open, onAccept, showCloseButton = false, onClose }
             <BookOpen className="w-8 h-8 text-primary-foreground" />
           </div>
           <DialogTitle className="font-display text-2xl text-foreground">
-            Termos de Uso
+            {t('termsTitle')}
           </DialogTitle>
           <DialogDescription className="text-muted-foreground">
-            Leia e aceite os termos para continuar
+            {t('termsSubtitle')}
           </DialogDescription>
         </DialogHeader>
 
@@ -31,32 +33,21 @@ export function TermsDialog({ open, onAccept, showCloseButton = false, onClose }
             <div className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-primary mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-medium text-foreground mb-1">Uso do Aplicativo</h4>
-                <p>
-                  Este aplicativo foi desenvolvido para compartilhar versículos e frases bíblicas 
-                  inspiradoras. Todo o conteúdo é retirado da Bíblia Sagrada.
-                </p>
+                <h4 className="font-medium text-foreground mb-1">{t('termsAppUsageTitle')}</h4>
+                <p>{t('termsAppUsageDesc')}</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
               <Bell className="w-5 h-5 text-primary mt-0.5 shrink-0" />
               <div>
-                <h4 className="font-medium text-foreground mb-1">Exibição de Anúncios</h4>
-                <p>
-                  Para manter o aplicativo gratuito e disponível para todos, exibimos anúncios 
-                  durante o uso. Os anúncios são fornecidos por parceiros de publicidade e 
-                  ajudam a custear o desenvolvimento e manutenção do app.
-                </p>
+                <h4 className="font-medium text-foreground mb-1">{t('termsAdsTitle')}</h4>
+                <p>{t('termsAdsDesc')}</p>
               </div>
             </div>
 
             <div className="border-t border-border pt-4 mt-4">
-              <p className="text-xs">
-                Ao aceitar estes termos, você concorda com a exibição de anúncios e com o 
-                uso do aplicativo conforme descrito acima. Seus dados de favoritos são 
-                armazenados apenas localmente no seu dispositivo.
-              </p>
+              <p className="text-xs">{t('termsAcceptText')}</p>
             </div>
           </div>
         </ScrollArea>
@@ -64,11 +55,11 @@ export function TermsDialog({ open, onAccept, showCloseButton = false, onClose }
         <DialogFooter className="flex flex-col gap-2 sm:flex-col">
           {showCloseButton ? (
             <Button onClick={onClose} variant="outline" className="w-full">
-              Fechar
+              {t('termsCloseButton')}
             </Button>
           ) : (
             <Button onClick={onAccept} className="w-full gold-gradient text-primary-foreground hover:opacity-90">
-              Aceitar e Continuar
+              {t('termsAcceptButton')}
             </Button>
           )}
         </DialogFooter>
