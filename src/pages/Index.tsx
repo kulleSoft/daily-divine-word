@@ -81,6 +81,7 @@ const Index = () => {
             isFavorite={isFavorite}
             onToggleFavorite={toggleFavorite}
             t={t}
+            language={language!}
           />
         )}
         {activeTab === 'favorites' && (
