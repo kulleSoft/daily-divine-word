@@ -1,31 +1,33 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { VerseCard } from '@/components/VerseCard';
 import { getDailyVerse, getRandomVerse, Verse } from '@/data/verses';
 import { useToast } from '@/hooks/use-toast';
-import { TranslationKey } from '@/i18n/translations';
+import { Language, TranslationKey } from '@/i18n/translations';
 
 interface VersesScreenProps {
   isFavorite: (id: number) => boolean;
   onToggleFavorite: (verse: Verse) => void;
   t: (key: TranslationKey) => string;
+  language: Language;
 }
 
-export function VersesScreen({ isFavorite, onToggleFavorite, t }: VersesScreenProps) {
-  const [currentVerse, setCurrentVerse] = useState<Verse>(getDailyVerse);
+export function VersesScreen({ isFavorite, onToggleFavorite, t, language }: VersesScreenProps) {
+  const [currentVerse, setCurrentVerse] = useState<Verse>(() => getDailyVerse(language));
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    setCurrentVerse(getDailyVerse(language));
+  }, [language]);
 
   const handleShare = useCallback(async () => {
     const shareText = `"${currentVerse.text}"\n\n— ${currentVerse.reference}\n\n${t('shareAppName')}`;
     
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: t('shareTitle'),
-          text: shareText,
-        });
+        await navigator.share({ title: t('shareTitle'), text: shareText });
       } catch (error) {
         if ((error as Error).name !== 'AbortError') {
           await navigator.clipboard.writeText(shareText);
@@ -41,10 +43,10 @@ export function VersesScreen({ isFavorite, onToggleFavorite, t }: VersesScreenPr
   const handleNewVerse = useCallback(() => {
     setIsRefreshing(true);
     setTimeout(() => {
-      setCurrentVerse(getRandomVerse());
+      setCurrentVerse(getRandomVerse(language));
       setIsRefreshing(false);
     }, 300);
-  }, []);
+  }, [language]);
 
   return (
     <div className="flex flex-col min-h-full px-4 py-6 pb-24">
