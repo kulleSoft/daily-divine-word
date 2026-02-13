@@ -29,19 +29,19 @@ export function LanguageDialog({ open, onSelect }: LanguageDialogProps) {
             onClick={() => onSelect('pt')}
             variant="outline"
             size="lg"
-            className="w-full h-14 text-lg gap-3 border-primary/30 hover:border-primary hover:bg-primary/5"
+            className="w-full h-16 text-lg gap-4 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all"
           >
-            <span className="text-2xl">🇧🇷</span>
-            Português
+            <span className="text-4xl">🇧🇷</span>
+            <span>Português</span>
           </Button>
           <Button
             onClick={() => onSelect('en')}
             variant="outline"
             size="lg"
-            className="w-full h-14 text-lg gap-3 border-primary/30 hover:border-primary hover:bg-primary/5"
+            className="w-full h-16 text-lg gap-4 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all"
           >
-            <span className="text-2xl">🇺🇸</span>
-            English
+            <span className="text-4xl">🇺🇸</span>
+            <span>English</span>
           </Button>
         </div>
       </DialogContent>
