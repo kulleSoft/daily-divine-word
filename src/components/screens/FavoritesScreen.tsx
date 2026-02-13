@@ -4,50 +4,43 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Verse } from '@/data/verses';
 import { useToast } from '@/hooks/use-toast';
 import { useCallback } from 'react';
+import { TranslationKey } from '@/i18n/translations';
 
 interface FavoritesScreenProps {
   favorites: Verse[];
   onRemoveFavorite: (id: number) => void;
+  t: (key: TranslationKey) => string;
 }
 
-export function FavoritesScreen({ favorites, onRemoveFavorite }: FavoritesScreenProps) {
+export function FavoritesScreen({ favorites, onRemoveFavorite, t }: FavoritesScreenProps) {
   const { toast } = useToast();
 
   const handleShare = useCallback(async (verse: Verse) => {
-    const shareText = `"${verse.text}"\n\n— ${verse.reference}\n\n📖 Frases Bíblicas`;
+    const shareText = `"${verse.text}"\n\n— ${verse.reference}\n\n${t('shareAppName')}`;
     
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: 'Frase Bíblica',
-          text: shareText,
-        });
+        await navigator.share({ title: t('shareTitle'), text: shareText });
       } catch (error) {
         if ((error as Error).name !== 'AbortError') {
           await navigator.clipboard.writeText(shareText);
-          toast({
-            title: 'Copiado!',
-            description: 'Versículo copiado para a área de transferência.',
-          });
+          toast({ title: t('copied'), description: t('copiedDesc') });
         }
       }
     } else {
       await navigator.clipboard.writeText(shareText);
-      toast({
-        title: 'Copiado!',
-        description: 'Versículo copiado para a área de transferência.',
-      });
+      toast({ title: t('copied'), description: t('copiedDesc') });
     }
-  }, [toast]);
+  }, [toast, t]);
 
   return (
     <div className="flex flex-col min-h-full px-4 py-6 pb-24">
       <header className="text-center mb-6">
         <h1 className="font-display text-3xl font-bold gold-text mb-2">
-          Favoritos
+          {t('favoritesTitle')}
         </h1>
         <p className="text-muted-foreground text-sm">
-          Suas frases salvas
+          {t('favoritesSubtitle')}
         </p>
       </header>
 
@@ -57,10 +50,10 @@ export function FavoritesScreen({ favorites, onRemoveFavorite }: FavoritesScreen
             <Heart className="w-10 h-10 text-muted-foreground" />
           </div>
           <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-            Nenhum favorito ainda
+            {t('noFavorites')}
           </h3>
           <p className="text-muted-foreground text-sm">
-            Toque no coração nas frases para salvá-las aqui
+            {t('noFavoritesHint')}
           </p>
         </div>
       ) : (
@@ -106,11 +99,10 @@ export function FavoritesScreen({ favorites, onRemoveFavorite }: FavoritesScreen
         </ScrollArea>
       )}
 
-      {/* Ad placeholder */}
       {favorites.length > 0 && (
         <div className="mt-6 mx-auto w-full max-w-lg">
           <div className="bg-muted/50 rounded-lg h-16 flex items-center justify-center border border-border/50">
-            <span className="text-xs text-muted-foreground">Espaço para Anúncio</span>
+            <span className="text-xs text-muted-foreground">{t('adPlaceholder')}</span>
           </div>
         </div>
       )}

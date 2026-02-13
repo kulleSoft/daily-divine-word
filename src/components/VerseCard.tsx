@@ -2,6 +2,7 @@ import { Heart, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Verse } from '@/data/verses';
 import { cn } from '@/lib/utils';
+import { TranslationKey } from '@/i18n/translations';
 
 interface VerseCardProps {
   verse: Verse;
@@ -9,9 +10,10 @@ interface VerseCardProps {
   onToggleFavorite: () => void;
   onShare: () => void;
   className?: string;
+  t: (key: TranslationKey) => string;
 }
 
-export function VerseCard({ verse, isFavorite, onToggleFavorite, onShare, className }: VerseCardProps) {
+export function VerseCard({ verse, isFavorite, onToggleFavorite, onShare, className, t }: VerseCardProps) {
   return (
     <div 
       className={cn(
@@ -20,7 +22,6 @@ export function VerseCard({ verse, isFavorite, onToggleFavorite, onShare, classN
       )}
     >
       <div className="relative">
-        {/* Decorative quote mark */}
         <span className="absolute -top-2 -left-2 text-6xl gold-text opacity-30 font-display select-none">
           "
         </span>
@@ -55,7 +56,7 @@ export function VerseCard({ verse, isFavorite, onToggleFavorite, onShare, classN
             )} 
           />
           <span className="text-sm font-medium">
-            {isFavorite ? 'Salvo' : 'Salvar'}
+            {isFavorite ? t('saved') : t('save')}
           </span>
         </Button>
 
@@ -66,7 +67,7 @@ export function VerseCard({ verse, isFavorite, onToggleFavorite, onShare, classN
           className="gap-2 text-muted-foreground hover:text-primary transition-colors"
         >
           <Share2 className="w-5 h-5" />
-          <span className="text-sm font-medium">Compartilhar</span>
+          <span className="text-sm font-medium">{t('share')}</span>
         </Button>
       </div>
     </div>
