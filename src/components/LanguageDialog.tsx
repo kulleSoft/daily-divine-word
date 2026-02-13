@@ -31,7 +31,7 @@ export function LanguageDialog({ open, onSelect }: LanguageDialogProps) {
             size="lg"
             className="w-full h-16 text-lg gap-4 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all"
           >
-            <span className="text-4xl">🇧🇷</span>
+            <span className="text-5xl" style={{ fontFamily: 'system-ui' }}>🇧🇷</span>
             <span>Português</span>
           </Button>
           <Button
@@ -40,7 +40,7 @@ export function LanguageDialog({ open, onSelect }: LanguageDialogProps) {
             size="lg"
             className="w-full h-16 text-lg gap-4 border-primary/30 hover:border-primary hover:bg-primary/5 transition-all"
           >
-            <span className="text-4xl">🇺🇸</span>
+            <span className="text-5xl" style={{ fontFamily: 'system-ui' }}>🇺🇸</span>
             <span>English</span>
           </Button>
         </div>
